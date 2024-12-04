@@ -22,9 +22,9 @@ public class AntSpawner : MonoBehaviour
     private IEnumerator generateAnt()
     {
         yield return new WaitForSeconds(spawnDelay);
-        int randomZPosition = Random.Range(20, 80);
+        int randomZPosition = Random.Range(0, 100);
 
-        GameObject newAnt = Instantiate(ant, new Vector3(-30f, 0f, randomZPosition), Quaternion.Euler(0f, 90f, 0f));
+        GameObject newAnt = Instantiate(ant, new Vector3(0f, 0f, randomZPosition), Quaternion.Euler(0f, 90f, 0f));
         StartCoroutine(generateAnt());
     }
 }

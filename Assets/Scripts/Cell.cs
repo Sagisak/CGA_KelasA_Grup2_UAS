@@ -1,4 +1,10 @@
 public class Cell
 {
-    public bool isWater;
+    public bool isWalkable;
+
+    // Constructor accepting one argument
+    public Cell(bool isWater)
+    {
+        this.isWalkable = isWalkable;
+    }
 }

@@ -236,9 +236,9 @@ public class Grid : MonoBehaviour
                 GraphNode node = gg.GetNode(x, y);
                 Cell cell = grid[x, y];
                 if(node.Walkable)
-                    colorMap[y * size + x] = Color.blue;
+                    colorMap[y * size + x] = new Color(215f / 255f, 242f / 255f, 117f / 255f);
                 else
-                    colorMap[y * size + x] = Color.green;
+                    colorMap[y * size + x] = new Color(198f / 255f, 161f / 255f, 105f / 255f);
             }
         }
         texture.filterMode = FilterMode.Point;

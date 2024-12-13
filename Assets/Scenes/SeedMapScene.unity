@@ -233,12 +233,12 @@ MonoBehaviour:
   treePrefabs: []
   terrainMaterial: {fileID: 2100000, guid: ac884c13b1cef46458e9eb4ee0a8f916, type: 2}
   edgeMaterial: {fileID: 2100000, guid: 1f99f4b5e8a7cd543be81fcc3d2f1da3, type: 2}
-  waterLevel: 0.75
+  waterLevel: 0.55
   scale: 0.1
   treeNoiseScale: 0.05
   treeDensity: 0.5
   riverNoiseScale: 0.06
-  rivers: 10
+  rivers: 5
   size: 100
 --- !u!4 &453875965
 Transform:
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 453875963}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32fe2e8fe0212b840a1c067dff802f3b, type: 3}
   m_Name: 

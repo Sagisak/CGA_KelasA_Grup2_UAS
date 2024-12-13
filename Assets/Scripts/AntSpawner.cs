@@ -7,12 +7,11 @@ public class AntSpawner : MonoBehaviour
 {
     public GameObject ant;
     public Vector3 targetPosition;
-    private float spawnDelay;
+    public float spawnDelay;
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnDelay = 3f;
         StartCoroutine(generateAnt());
     }
 

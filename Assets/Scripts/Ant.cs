@@ -5,57 +5,17 @@ using Pathfinding;
 
 public class Ant : MonoBehaviour
 {
-    public float speed = 5f;
-
-    private Seeker seeker;
-    private Path path;
-    private int currentWaypoint = 0; // Current waypoint index
-    private float waypointDistance = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        GridGraph gg = AstarPath.active.data.gridGraph;
-        Debug.Log(gg.width);
-        GraphNode targetNode;
-        do
-        {
-            int randomX = Random.Range(90, gg.width);
-            int randomZ = Random.Range(0, gg.depth);
-            targetNode = gg.GetNode(randomX, randomZ);
-        }
-        while (!targetNode.Walkable);
 
-        Vector3 targetPosition = (Vector3)targetNode.position;
-        Debug.Log($"Ant target position: {targetPosition}");
-
-        seeker = GetComponent<Seeker>();
-        seeker.StartPath(transform.position, targetPosition, OnPathComplete);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (path == null) return;
 
-        // Check if we've reached the end of the path
-        if (currentWaypoint >= path.vectorPath.Count)
-        {
-            Debug.Log("End of path reached.");
-            Destroy(this.gameObject);
-            return;
-        }
-
-        // Move towards the next waypoint
-        Vector3 direction = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        transform.position += direction * speed * Time.deltaTime;
-        Debug.Log(Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]));
-
-        // Check if we've reached the current waypoint
-        if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < waypointDistance)
-        {
-            currentWaypoint++;
-        }
     }
 
     // void FixedUpdate()
@@ -65,14 +25,6 @@ public class Ant : MonoBehaviour
 
     void OnPathComplete(Path p)
     {
-        if (!p.error)
-        {
-            path = p;
-            currentWaypoint = 0; // Reset waypoint index
-        }
-        else
-        {
-            Debug.LogError("Pathfinding error: " + p.errorLog);
-        }
+        
     }
 }

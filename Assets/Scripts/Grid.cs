@@ -59,7 +59,7 @@ public class Grid : MonoBehaviour
 
     void GenerateRivers(Cell[,] grid) {
         float[,] noiseMap = new float[size, size];
-        (float xOffset, float yOffset) = (Random.Range(-20000f, 20000f), Random.Range(-20000f, 20000f));
+        (float xOffset, float yOffset) = (Random.Range(-10000f, 10000f), Random.Range(-10000f, 10000f));
         for (int y = 0; y < size; y++)
         {
             for (int x = 0; x < size; x++)
@@ -85,7 +85,7 @@ public class Grid : MonoBehaviour
                     GraphNode node = gg.GetNode(x, y);
                     node.Walkable = noiseMap[x, y] > .4f;
                     if(node.Walkable){
-                        grid[x, y].isWalkable = true;
+                        grid[x, y].isWalkable = false;
                     }
                 }
             }
@@ -101,7 +101,7 @@ public class Grid : MonoBehaviour
                     GraphNode node = result.path[j];
                     int x = Mathf.RoundToInt(((Vector3)node.position).x);
                     int y = Mathf.RoundToInt(((Vector3)node.position).z);
-                    grid[x, y].isWalkable = true;
+                    grid[x, y].isWalkable = false;
                 }
                 k++;
             });
@@ -235,10 +235,12 @@ public class Grid : MonoBehaviour
             for(int x = 0; x < size; x++) {
                 GraphNode node = gg.GetNode(x, y);
                 Cell cell = grid[x, y];
-                if(node.Walkable)
-                    colorMap[y * size + x] = Color.blue;
+                if (node.Walkable)
+                    colorMap[y * size + x] = new Color(215f / 255f, 242f / 255f, 117f / 255f);
+                    // colorMap[y * size + x] = Color.blue;
                 else
-                    colorMap[y * size + x] = Color.green;
+                    colorMap[y * size + x] = new Color(198f / 255f, 161f / 255f, 105f / 255f);
+                    // colorMap[y * size + x] = Color.green;
             }
         }
         texture.filterMode = FilterMode.Point;

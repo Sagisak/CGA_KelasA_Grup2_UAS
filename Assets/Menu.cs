@@ -25,6 +25,7 @@ public class Menu : MonoBehaviour
     // Fungsi untuk memulai scene
     public void StartButton(string scenename)
     {
+        Debug.Log("Memulai scene: " + scenename); // Debug log untuk memeriksa nama scene
         SceneManager.LoadScene(scenename);  // Memuat scene berdasarkan nama
     }
 
@@ -35,6 +36,7 @@ public class Menu : MonoBehaviour
         infopanel.SetActive(true);   // Menampilkan panel informasi
     }
 
+    // Fungsi untuk kembali ke panel menu
     public void BackButton()
     {
         menupanel.SetActive(true);   // Menampilkan panel menu
@@ -42,9 +44,13 @@ public class Menu : MonoBehaviour
     }
 
     // Fungsi untuk keluar dari aplikasi
-
     public void QuitButton()
     {
+        Debug.Log("Quit"); // Debug log untuk menampilkan pesan saat keluar
         Application.Quit(); // Keluar dari aplikasi
+
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;  // Untuk keluar saat di Unity Editor
+        #endif
     }
 }

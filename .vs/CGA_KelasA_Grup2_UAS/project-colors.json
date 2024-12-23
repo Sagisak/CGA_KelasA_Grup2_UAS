@@ -5,7 +5,12 @@
       "ProjectGuid": "093a254c-ad4b-5506-410f-984003136ff2",
       "DisplayName": "Assembly-CSharp",
       "ColorIndex": 0
+    },
+    "85d08328-e343-87f0-85d9-c3e225ca5dc3": {
+      "ProjectGuid": "85d08328-e343-87f0-85d9-c3e225ca5dc3",
+      "DisplayName": "AstarPathfindingProject",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

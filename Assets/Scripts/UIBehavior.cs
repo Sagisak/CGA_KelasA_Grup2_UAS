@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
+using TMPro;
 
-public class Ant : MonoBehaviour
+public class UIBehavior : MonoBehaviour
 {
-    AIPath aiPath;
+    private TextMeshProUGUI textField;  
     private GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        aiPath = this.GetComponent<AIPath>();
+        textField = GetComponent<TextMeshProUGUI>();
         GameObject gameManagerObj = GameObject.Find("GameManager");
         gameManager = gameManagerObj.GetComponent<GameManager>();
     }
@@ -18,20 +19,15 @@ public class Ant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(aiPath.reachedDestination)
+       if(this.gameObject.name == "Total Lives")
         {
-            gameManager.lives -= 1;
-            Destroy(this.gameObject);
+            textField.text = gameManager.lives.ToString();
         }
-    }
 
-    // void FixedUpdate()
-    // {
-    //     this.transform.position += Vector3.right * 5f * Time.deltaTime; 
-    // }
+        if (this.gameObject.name == "Total Money")
+        {
+            textField.text = "$" + gameManager.money.ToString();
+        }
 
-    void OnPathComplete(Path p)
-    {
-        
     }
 }

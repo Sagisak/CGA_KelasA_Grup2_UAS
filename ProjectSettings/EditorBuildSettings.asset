@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/HalamanUtama.unity
+    guid: ea37d726ed524482bbc24f654036f638
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: c2c2b73f2b6314d51b491a23d7ae7cc8
+  - enabled: 0
+    path: Assets/Scenes/GameScene.unity
+    guid: 50cb3bd0e18e448e188f3396a0f5b99b
   m_configObjects: {}

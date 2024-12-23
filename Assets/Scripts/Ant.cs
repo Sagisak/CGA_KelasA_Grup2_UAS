@@ -5,17 +5,24 @@ using Pathfinding;
 
 public class Ant : MonoBehaviour
 {
-
+    AIPath aiPath;
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
-
+        aiPath = this.GetComponent<AIPath>();
+        GameObject gameManagerObj = GameObject.Find("GameManager");
+        gameManager = gameManagerObj.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(aiPath.reachedDestination)
+        {
+            gameManager.lives -= 1;
+            Destroy(this.gameObject);
+        }
     }
 
     // void FixedUpdate()

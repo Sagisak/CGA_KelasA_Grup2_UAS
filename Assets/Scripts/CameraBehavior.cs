@@ -19,7 +19,7 @@ public class CameraBehavior : MonoBehaviour
         
         if (verticalInput != 0)
         {
-            if (transform.position.z < 78f && transform.position.z > 30f)
+            if (transform.position.z < 78f && transform.position.z > 17f)
             {
                 // Apply speed factor to verticalInput for slower movement
                 transform.position += new Vector3(0, 0, verticalInput * speed);

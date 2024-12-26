@@ -6,14 +6,14 @@ using TMPro;
 public class UIBehavior : MonoBehaviour
 {
     private TextMeshProUGUI textField;  
-    private GameManager gameManager;
+    private Game gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         textField = GetComponent<TextMeshProUGUI>();
         GameObject gameManagerObj = GameObject.Find("GameManager");
-        gameManager = gameManagerObj.GetComponent<GameManager>();
+        gameManager = gameManagerObj.GetComponent<Game>();
     }
 
     // Update is called once per frame

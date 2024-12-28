@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/HalamanUtama.unity
     guid: ea37d726ed524482bbc24f654036f638
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/Game2.unity
     guid: c2c2b73f2b6314d51b491a23d7ae7cc8
   - enabled: 0
     path: Assets/Scenes/GameScene.unity

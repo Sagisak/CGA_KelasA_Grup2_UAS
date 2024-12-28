@@ -215,6 +215,7 @@
     <Compile Include="Assets\TowerDefenseTemplate\Scripts\TowerDefense\Towers\Data\TowerLevelData.cs" />
     <Compile Include="Assets\TowerDefenseTemplate\Scripts\ActionGameFramework\Projectiles\BallisticProjectile.cs" />
     <Compile Include="Assets\TowerDefenseTemplate\Scripts\TowerDefense\Agents\Data\AgentConfiguration.cs" />
+    <Compile Include="Assets\Scripts\TowerPlacement.cs" />
     <Compile Include="Assets\TowerDefenseTemplate\Scripts\TowerDefense\Economy\CurrencyChangeInfo.cs" />
     <Compile Include="Assets\TowerDefenseTemplate\Scripts\ActionGameFramework\Projectiles\BallisticFireMode.cs" />
     <Compile Include="Assets\TowerDefenseTemplate\PostProcessing\Runtime\Components\TaaComponent.cs" />

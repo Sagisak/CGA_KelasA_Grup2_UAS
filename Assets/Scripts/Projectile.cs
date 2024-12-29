@@ -4,6 +4,12 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
     private Transform target;
+    private Game game;
+
+    void Start()
+    {
+        game = FindObjectOfType<Game>();
+    }
 
     public void Seek(Transform _target)
     {
@@ -35,10 +41,11 @@ public class Projectile : MonoBehaviour
         // Destroy the projectile
         Destroy(gameObject);
 
-        // Destroy the target (ant)
+        // Destroy the target (ant) and increase money
         if (target != null)
         {
             Destroy(target.gameObject);
+            game.IncreaseMoney(50);
         }
     }
 }

@@ -8,12 +8,14 @@ public class TowerPlacement : MonoBehaviour
     private GameObject currentPreview;
     private GameObject selectedTowerPrefab;
     private bool isPlacing = false;
+    private Game game;
 
     private GridGraph gridGraph; // Reference to the GridGraph
     private const float lockedYPosition = 0f; // Lock towers at Y position
 
     void Start()
     {
+        game = FindObjectOfType<Game>();
         // Load the projectile prefab from the Resources folder
         projectilePrefab = Resources.Load<GameObject>("projectile");
 
@@ -133,6 +135,8 @@ public class TowerPlacement : MonoBehaviour
             {
                 Debug.Log("Projectile prefab is assigned to the Tower2 component.");
             }
+            game.DecreaseMoney(200);
+            
 
             // Mark the node as non-walkable after placing the tower
             gridNode.Walkable = false;

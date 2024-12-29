@@ -8,10 +8,12 @@ public class AntSpawner : MonoBehaviour
     public GameObject ant;
     public Vector3 targetPosition;
     public float spawnDelay;
+    private Game game;
 
     // Start is called before the first frame update
     void Start()
     {
+        game = FindObjectOfType<Game>();
         StartCoroutine(generateAnt());
     }
 
@@ -20,6 +22,7 @@ public class AntSpawner : MonoBehaviour
     {
         
     }
+
     private IEnumerator generateAnt()
     {
         yield return new WaitForSeconds(spawnDelay);

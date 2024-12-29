@@ -4,6 +4,7 @@ using Pathfinding;
 public class TowerPlacement : MonoBehaviour
 {
     public GameObject[] towerPrefabs; // Array of tower prefabs
+    private GameObject projectilePrefab; // Remove the public modifier to load it dynamically
     private GameObject currentPreview;
     private GameObject selectedTowerPrefab;
     private bool isPlacing = false;
@@ -13,11 +14,24 @@ public class TowerPlacement : MonoBehaviour
 
     void Start()
     {
+        // Load the projectile prefab from the Resources folder
+        projectilePrefab = Resources.Load<GameObject>("projectile");
+
         // Get the GridGraph instance
         gridGraph = AstarPath.active.graphs[0] as GridGraph;
         if (gridGraph == null)
         {
             Debug.LogError("GridGraph is not properly configured in AstarPath");
+        }
+
+        // Debug log to check if projectilePrefab is assigned
+        if (projectilePrefab == null)
+        {
+            Debug.LogError("Projectile prefab is not assigned in TowerPlacement!");
+        }
+        else
+        {
+            Debug.Log("Projectile prefab is assigned in TowerPlacement.");
         }
     }
 
@@ -72,9 +86,7 @@ public class TowerPlacement : MonoBehaviour
             {
                 // Snap to grid coordinates (XZ only) and lock Y
                 Vector3 snappedPosition = new Vector3(
-                    Mathf.Floor(worldPosition.x) + 0.5f, // Center of the grid cell
-                    lockedYPosition,                     // Lock Y
-                    Mathf.Floor(worldPosition.z) + 0.5f
+                    Mathf.Floor(worldPosition.x) + 0.5f, lockedYPosition, Mathf.Floor(worldPosition.z) + 0.5f
                 );
                 currentPreview.transform.position = snappedPosition;
 
@@ -108,7 +120,19 @@ public class TowerPlacement : MonoBehaviour
         if (gridNode != null && !gridNode.Walkable)
         {
             // Place the tower at the preview position
-            Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
+            GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
+            Tower2 towerComponent = towerGO.AddComponent<Tower2>(); // Add the Tower2 component to the placed tower
+            towerComponent.projectilePrefab = projectilePrefab; // Assign the projectile prefab to the Tower2 component
+
+            // Debug log to check if projectilePrefab is assigned to the tower
+            if (towerComponent.projectilePrefab == null)
+            {
+                Debug.LogError("Projectile prefab is not assigned to the Tower2 component!");
+            }
+            else
+            {
+                Debug.Log("Projectile prefab is assigned to the Tower2 component.");
+            }
 
             // Mark the node as non-walkable after placing the tower
             gridNode.Walkable = false;
@@ -119,19 +143,16 @@ public class TowerPlacement : MonoBehaviour
 
     private void CancelPlacement()
     {
-        isPlacing = false;
-
         if (currentPreview != null)
         {
             Destroy(currentPreview);
+            currentPreview = null;
         }
-
-        selectedTowerPrefab = null;
+        isPlacing = false;
     }
 
     private void SetPreviewMaterialTransparent(GameObject previewObject)
     {
-        // Change the material of the preview object to appear semi-transparent
         Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in renderers)
         {
@@ -143,15 +164,13 @@ public class TowerPlacement : MonoBehaviour
                 material.SetInt("_ZWrite", 0);
                 material.DisableKeyword("_ALPHATEST_ON");
                 material.EnableKeyword("_ALPHABLEND_ON");
-                material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                material.color = new Color(material.color.r, material.color.g, material.color.b, 0.7f); // 70% opacity
+                material.renderQueue = 3000;
             }
         }
     }
 
     private void AddRendererComponent(GameObject previewObject)
     {
-        // Ensure the object has a Renderer component
         if (previewObject.GetComponentInChildren<Renderer>() == null)
         {
             previewObject.AddComponent<MeshRenderer>();

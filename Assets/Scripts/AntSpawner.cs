@@ -26,6 +26,7 @@ public class AntSpawner : MonoBehaviour
         int randomZPosition = Random.Range(0, 100);
 
         GameObject newAnt = Instantiate(ant, new Vector3(2f, 0f, randomZPosition), Quaternion.Euler(0f, 90f, 0f));
+        newAnt.tag = "Ant";
         
         targetPosition = new Vector3(95f, 1f, Random.Range(0f, 100f));
         AIPath aiPath = newAnt.GetComponent<AIPath>();

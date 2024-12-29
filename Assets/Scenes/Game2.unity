@@ -928,6 +928,7 @@ GameObject:
   - component: {fileID: 521254683}
   - component: {fileID: 521254685}
   - component: {fileID: 521254684}
+  - component: {fileID: 521254686}
   m_Layer: 5
   m_Name: Total Round
   m_TagString: Untagged
@@ -1051,6 +1052,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521254682}
   m_CullTransparentMesh: 1
+--- !u!114 &521254686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521254682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae06e19aebb15c48b52e7899328abc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &639619059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,6 +1977,51 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: -25}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1690018303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1690018305}
+  - component: {fileID: 1690018304}
+  m_Layer: 0
+  m_Name: TowerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1690018304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690018303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef75e1bb52cd9c4d91c3112daf961ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrefabs: []
+--- !u!4 &1690018305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690018303}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -30, y: 1, z: 50}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2033913605
 GameObject:
   m_ObjectHideFlags: 0
@@ -2216,6 +2274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 99
   money: 0
+  round: 0
+  spawnRateModifier: 1
 --- !u!4 &2085676776
 Transform:
   m_ObjectHideFlags: 0
@@ -2246,3 +2306,4 @@ SceneRoots:
   - {fileID: 475115110}
   - {fileID: 109447120}
   - {fileID: 2085676776}
+  - {fileID: 1690018305}

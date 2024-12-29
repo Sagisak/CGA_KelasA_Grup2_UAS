@@ -28,6 +28,10 @@ public class UIBehavior : MonoBehaviour
         {
             textField.text = "$" + gameManager.money.ToString();
         }
+        if (this.gameObject.name == "Total Round")
+        {
+            textField.text = "Round " + gameManager.round.ToString();
+        }
 
     }
 }

@@ -20,21 +20,24 @@ public class AntSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Debug log to check the current spawn rate modifier
+        Debug.Log("Current Spawn Rate Modifier: " + game.spawnRateModifier);
     }
 
     private IEnumerator generateAnt()
     {
-        yield return new WaitForSeconds(spawnDelay);
-        int randomZPosition = Random.Range(0, 100);
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnDelay * game.spawnRateModifier);
+            int randomZPosition = Random.Range(0, 100);
 
-        GameObject newAnt = Instantiate(ant, new Vector3(2f, 0f, randomZPosition), Quaternion.Euler(0f, 90f, 0f));
-        newAnt.tag = "Ant";
-        
-        targetPosition = new Vector3(95f, 1f, Random.Range(0f, 100f));
-        AIPath aiPath = newAnt.GetComponent<AIPath>();
-        aiPath.destination = targetPosition;
-        aiPath.SearchPath();
-        StartCoroutine(generateAnt());
+            GameObject newAnt = Instantiate(ant, new Vector3(2f, 0f, randomZPosition), Quaternion.Euler(0f, 90f, 0f));
+            newAnt.tag = "Ant";
+            
+            targetPosition = new Vector3(95f, 1f, Random.Range(0f, 100f));
+            AIPath aiPath = newAnt.GetComponent<AIPath>();
+            aiPath.destination = targetPosition;
+            aiPath.SearchPath();
+        }
     }
 }

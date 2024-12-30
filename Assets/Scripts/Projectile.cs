@@ -34,6 +34,8 @@ public class Projectile : MonoBehaviour
         }
 
         transform.Translate(direction.normalized * distanceThisFrame, Space.World);
+        Vector3 targetPosition = new Vector3(target.position.x, 1.5f, target.position.z);
+        transform.LookAt(target);
     }
 
     void HitTarget()
@@ -45,7 +47,7 @@ public class Projectile : MonoBehaviour
         if (target != null)
         {
             Destroy(target.gameObject);
-            game.IncreaseMoney(50);
+            game.IncreaseMoney(5);
         }
     }
 }

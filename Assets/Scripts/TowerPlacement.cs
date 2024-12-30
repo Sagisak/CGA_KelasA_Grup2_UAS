@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
 public class TowerPlacement : MonoBehaviour
 {
     public GameObject[] towerPrefabs; // Array of tower prefabs
-    private GameObject projectilePrefab; // Remove the public modifier to load it dynamically
     private GameObject currentPreview;
+    private int selectedTowerIndex;
     private GameObject selectedTowerPrefab;
     private bool isPlacing = false;
     private Game game;
@@ -17,23 +18,12 @@ public class TowerPlacement : MonoBehaviour
     {
         game = FindObjectOfType<Game>();
         // Load the projectile prefab from the Resources folder
-        projectilePrefab = Resources.Load<GameObject>("projectile");
 
         // Get the GridGraph instance
         gridGraph = AstarPath.active.graphs[0] as GridGraph;
         if (gridGraph == null)
         {
             Debug.LogError("GridGraph is not properly configured in AstarPath");
-        }
-
-        // Debug log to check if projectilePrefab is assigned
-        if (projectilePrefab == null)
-        {
-            Debug.LogError("Projectile prefab is not assigned in TowerPlacement!");
-        }
-        else
-        {
-            Debug.Log("Projectile prefab is assigned in TowerPlacement.");
         }
     }
 
@@ -49,7 +39,7 @@ public class TowerPlacement : MonoBehaviour
     public void SelectTower(int towerIndex)
     {
         if (towerIndex < 0 || towerIndex >= towerPrefabs.Length) return;
-
+        selectedTowerIndex = towerIndex;
         selectedTowerPrefab = towerPrefabs[towerIndex];
         StartPlacement();
     }
@@ -72,12 +62,19 @@ public class TowerPlacement : MonoBehaviour
 
         // Raycast to detect the grid
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             // Get grid position from world position
             Vector3 worldPosition = hit.point;
             var nearestNode = gridGraph.GetNearest(worldPosition).node;
             GridNode gridNode = nearestNode as GridNode;
+
+            Vector3 snappedPosition = new Vector3(
+                Mathf.Floor(worldPosition.x), lockedYPosition, Mathf.Floor(worldPosition.z)
+            );
+            currentPreview.transform.position = snappedPosition;
+
 
             if (gridNode != null && gridNode.Walkable)
             {
@@ -86,12 +83,6 @@ public class TowerPlacement : MonoBehaviour
             }
             else
             {
-                // Snap to grid coordinates (XZ only) and lock Y
-                Vector3 snappedPosition = new Vector3(
-                    Mathf.Floor(worldPosition.x) + 0.5f, lockedYPosition, Mathf.Floor(worldPosition.z) + 0.5f
-                );
-                currentPreview.transform.position = snappedPosition;
-
                 // Show placement is valid
                 currentPreview.GetComponentInChildren<Renderer>().material.color = new Color(0, 1, 0, 0.7f); // Green
             }
@@ -121,25 +112,33 @@ public class TowerPlacement : MonoBehaviour
 
         if (gridNode != null && !gridNode.Walkable)
         {
-            // Place the tower at the preview position
-            GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
-            Tower2 towerComponent = towerGO.AddComponent<Tower2>(); // Add the Tower2 component to the placed tower
-            towerComponent.projectilePrefab = projectilePrefab; // Assign the projectile prefab to the Tower2 component
-
-            // Debug log to check if projectilePrefab is assigned to the tower
-            if (towerComponent.projectilePrefab == null)
+            if(selectedTowerIndex == 0 && game.money > 200)
             {
-                Debug.LogError("Projectile prefab is not assigned to the Tower2 component!");
+                GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
+                Tower2 towerComponent = towerGO.AddComponent<Tower2>();
+                towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile1");
+                towerComponent.GetComponent<Tower2>().range = 10f;
+                towerComponent.GetComponent<Tower2>().fireRate = 1f;
+                game.DecreaseMoney(200);
             }
-            else
+            else if(selectedTowerIndex == 1 && game.money > 300)
             {
-                Debug.Log("Projectile prefab is assigned to the Tower2 component.");
+                GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
+                Tower2 towerComponent = towerGO.AddComponent<Tower2>();
+                towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile2");
+                towerComponent.GetComponent<Tower2>().range = 20f;
+                towerComponent.GetComponent<Tower2>().fireRate = 1f;
+                game.DecreaseMoney(300);
             }
-            game.DecreaseMoney(200);
-            
-
-            // Mark the node as non-walkable after placing the tower
-            gridNode.Walkable = false;
+            else if (selectedTowerIndex == 2 && game.money > 500)
+            {
+                GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
+                Tower2 towerComponent = towerGO.AddComponent<Tower2>();
+                towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile3");
+                towerComponent.GetComponent<Tower2>().range = 15f;
+                towerComponent.GetComponent<Tower2>().fireRate = 3f;
+                game.DecreaseMoney(500);
+            }
 
             CancelPlacement(); // End the placement process
         }

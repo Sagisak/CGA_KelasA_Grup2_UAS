@@ -21,7 +21,7 @@ public class AntSpawner : MonoBehaviour
     void Update()
     {
         // Debug log to check the current spawn rate modifier
-        Debug.Log("Current Spawn Rate Modifier: " + game.spawnRateModifier);
+        // Debug.Log("Current Spawn Rate Modifier: " + game.spawnRateModifier);
     }
 
     private IEnumerator generateAnt()

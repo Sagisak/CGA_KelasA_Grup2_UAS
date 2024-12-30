@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Tower2 : MonoBehaviour
 {
-    public float range = 10f;
-    public float fireRate = 1f;
+    public float range;
+    public float fireRate;
     public GameObject projectilePrefab;
     private float fireCountdown = 0f;
     private Transform target;
@@ -45,7 +45,7 @@ public class Tower2 : MonoBehaviour
         if (nearestAnt != null && shortestDistance <= range)
         {
             target = nearestAnt.transform;
-            Debug.Log("Target acquired: " + target.name);
+            FindChildByName(transform, "ProjectilePoint").parent.LookAt(target);
         }
         else
         {
@@ -62,7 +62,7 @@ public class Tower2 : MonoBehaviour
         }
 
         Debug.Log("Shooting at target: " + target.name);
-        GameObject projectileGO = Instantiate(projectilePrefab, transform.position, transform.rotation);
+        GameObject projectileGO = Instantiate(projectilePrefab, FindChildByName(transform, "ProjectilePoint").position, transform.rotation);
         Projectile projectile = projectileGO.GetComponent<Projectile>();
 
         if (projectile != null)
@@ -75,5 +75,20 @@ public class Tower2 : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+
+    Transform FindChildByName(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child;
+
+            // Recursively search in the child's children
+            Transform found = FindChildByName(child, name);
+            if (found != null)
+                return found;
+        }
+        return null; // Return null if no matching child is found
     }
 }

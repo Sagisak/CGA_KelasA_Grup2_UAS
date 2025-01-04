@@ -18,10 +18,10 @@ This is a group project assignment from one of our courses, called Computer Grap
 
 ## Controls
 
-W/Up arrow: Move the camera towards north of the map
-S/down arrow : move the camera towards south of the map
-Left mouse button : Place tower on designated area/to pick tower from options given
-Right mouse button : Cancel a tower before it is set on the designated area
+- W/Up arrow: Move the camera towards north of the map
+- S/down arrow : move the camera towards south of the map
+- Left mouse button : Place tower on designated area/to pick tower from options given
+- Right mouse button : Cancel a tower before it is set on the designated area
 
 ## Note
 

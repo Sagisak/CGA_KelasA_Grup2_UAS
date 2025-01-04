@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
 {
     public GameObject menupanel;
     public GameObject infopanel;
+    public GameObject pausepanel;
 
     // Start is called before the first frame update
     void Start()
@@ -52,5 +53,29 @@ public class Menu : MonoBehaviour
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;  // Untuk keluar saat di Unity Editor
         #endif
+    }
+
+    public void TogglePauseButton()
+    {
+        Time.timeScale = 0;
+        pausepanel.SetActive(true);
+    }
+    
+    public void ResumeButton()
+    {
+        Time.timeScale = 1;
+        pausepanel.SetActive(false);
+    }
+
+    public void RestartButton()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Game");
+    }
+
+    public void BackToMenuButton()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("HalamanUtama");
     }
 }

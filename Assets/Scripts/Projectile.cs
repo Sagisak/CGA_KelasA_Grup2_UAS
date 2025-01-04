@@ -3,6 +3,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
+    public float damage = 20f; // Add a damage variable
     private Transform target;
     private Game game;
 
@@ -34,20 +35,19 @@ public class Projectile : MonoBehaviour
         }
 
         transform.Translate(direction.normalized * distanceThisFrame, Space.World);
-        Vector3 targetPosition = new Vector3(target.position.x, 1.5f, target.position.z);
         transform.LookAt(target);
     }
 
     void HitTarget()
     {
+        // Deal damage to the target
+        Health targetHealth = target.GetComponent<Health>();
+        if (targetHealth != null)
+        {
+            targetHealth.TakeDamage(damage);
+        }
+
         // Destroy the projectile
         Destroy(gameObject);
-
-        // Destroy the target (ant) and increase money
-        if (target != null)
-        {
-            Destroy(target.gameObject);
-            game.IncreaseMoney(5);
-        }
     }
 }

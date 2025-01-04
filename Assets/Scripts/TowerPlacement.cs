@@ -57,26 +57,30 @@ public class TowerPlacement : MonoBehaviour
     }
 
     private void HandleTowerPreview()
+{
+    if (currentPreview == null || gridGraph == null) return;
+
+    // Create a plane at y = 0
+    Plane plane = new Plane(Vector3.up, Vector3.zero);
+    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+    if (plane.Raycast(ray, out float enter))
     {
-        if (currentPreview == null || gridGraph == null) return;
+        // Get the point where the ray intersects the plane
+        Vector3 worldPosition = ray.GetPoint(enter);
+        Debug.Log($"Plane hit at: {worldPosition}");
 
-        // Raycast to detect the grid
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        var nearestNode = gridGraph.GetNearest(worldPosition).node;
+        GridNode gridNode = nearestNode as GridNode;
+
+        if (gridNode != null)
         {
-            // Get grid position from world position
-            Vector3 worldPosition = hit.point;
-            var nearestNode = gridGraph.GetNearest(worldPosition).node;
-            GridNode gridNode = nearestNode as GridNode;
-
-            Vector3 snappedPosition = new Vector3(
-                Mathf.Floor(worldPosition.x), lockedYPosition, Mathf.Floor(worldPosition.z)
-            );
+            // Snap to grid position
+            Vector3 snappedPosition = (Vector3)gridNode.position;
+            Debug.Log($"Snapped Position: {snappedPosition}");
             currentPreview.transform.position = snappedPosition;
 
-
-            if (gridNode != null && gridNode.Walkable)
+            if (gridNode.Walkable)
             {
                 // If the node is walkable, show placement is invalid
                 currentPreview.GetComponentInChildren<Renderer>().material.color = new Color(1, 0, 0, 0.7f); // Red
@@ -87,7 +91,16 @@ public class TowerPlacement : MonoBehaviour
                 currentPreview.GetComponentInChildren<Renderer>().material.color = new Color(0, 1, 0, 0.7f); // Green
             }
         }
+        else
+        {
+            Debug.LogWarning("No valid grid node found at the plane hit position.");
+        }
     }
+    else
+    {
+        Debug.LogWarning("Raycast did not hit the plane.");
+    }
+}
 
     private void HandleMouseInput()
     {
@@ -112,30 +125,30 @@ public class TowerPlacement : MonoBehaviour
 
         if (gridNode != null && !gridNode.Walkable)
         {
-            if(selectedTowerIndex == 0 && game.money > 200)
+            if(selectedTowerIndex == 0 && game.money >= 200)
+            {
+                GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
+                Tower2 towerComponent = towerGO.AddComponent<Tower2>();
+                towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile1");
+                towerComponent.GetComponent<Tower2>().range = 20f;
+                towerComponent.GetComponent<Tower2>().fireRate = 1f;
+                game.DecreaseMoney(200);
+            }
+            else if(selectedTowerIndex == 1 && game.money >= 300)
+            {
+                GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
+                Tower2 towerComponent = towerGO.AddComponent<Tower2>();
+                towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile1");
+                towerComponent.GetComponent<Tower2>().range = 15f;
+                towerComponent.GetComponent<Tower2>().fireRate = 2f;
+                game.DecreaseMoney(300);
+            }
+            else if (selectedTowerIndex == 2 && game.money >= 500)
             {
                 GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
                 Tower2 towerComponent = towerGO.AddComponent<Tower2>();
                 towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile1");
                 towerComponent.GetComponent<Tower2>().range = 10f;
-                towerComponent.GetComponent<Tower2>().fireRate = 1f;
-                game.DecreaseMoney(200);
-            }
-            else if(selectedTowerIndex == 1 && game.money > 300)
-            {
-                GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
-                Tower2 towerComponent = towerGO.AddComponent<Tower2>();
-                towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile2");
-                towerComponent.GetComponent<Tower2>().range = 20f;
-                towerComponent.GetComponent<Tower2>().fireRate = 1f;
-                game.DecreaseMoney(300);
-            }
-            else if (selectedTowerIndex == 2 && game.money > 500)
-            {
-                GameObject towerGO = Instantiate(selectedTowerPrefab, currentPreview.transform.position, Quaternion.identity);
-                Tower2 towerComponent = towerGO.AddComponent<Tower2>();
-                towerComponent.projectilePrefab = Resources.Load<GameObject>("Projectile3");
-                towerComponent.GetComponent<Tower2>().range = 15f;
                 towerComponent.GetComponent<Tower2>().fireRate = 3f;
                 game.DecreaseMoney(500);
             }

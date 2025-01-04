@@ -8,6 +8,8 @@ public class Game : MonoBehaviour
     public int round = 1;
     public float spawnRateModifier = 1f;
     private float roundTimer = 120f; // 2 minutes in seconds
+    public GameObject gameOver;
+    public bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,14 @@ public class Game : MonoBehaviour
         round = 1;
         Debug.Log("Game started. Initial round: " + round);
         StartCoroutine(RoundTimer());
+    }
+
+    void Update()
+    {
+        if (lives <= 0 && !isGameOver)
+        {
+            GameOver();
+        }
     }
 
     private IEnumerator RoundTimer()
@@ -38,10 +48,6 @@ public class Game : MonoBehaviour
     public void DecreaseLives(int amount)
     {
         lives -= amount;
-        if (lives <= 0)
-        {
-            GameOver();
-        }
     }
 
     public void DecreaseMoney(int amount)
@@ -56,7 +62,8 @@ public class Game : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("Game Over!");
-        // Implement game over logic here (e.g., show game over screen, stop the game, etc.)
+        isGameOver = true;
+        Time.timeScale = 0;
+        gameOver.SetActive(true);
     }
 }

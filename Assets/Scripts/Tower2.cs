@@ -9,6 +9,19 @@ public class Tower2 : MonoBehaviour
     public GameObject projectilePrefab;
     private float fireCountdown = 0f;
     private Transform target;
+    private LineRenderer lineRenderer;
+
+    void Start()
+    {
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.positionCount = 50; // Number of segments in the circle
+        lineRenderer.useWorldSpace = false;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+        lineRenderer.loop = true;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default")) { color = Color.red };
+        DrawRangeCircle();
+    }
 
     void Update()
     {
@@ -61,7 +74,6 @@ public class Tower2 : MonoBehaviour
             return;
         }
 
-        Debug.Log("Shooting at target: " + target.name);
         GameObject projectileGO = Instantiate(projectilePrefab, FindChildByName(transform, "ProjectilePoint").position, transform.rotation);
         Projectile projectile = projectileGO.GetComponent<Projectile>();
 
@@ -71,10 +83,19 @@ public class Tower2 : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
+    void DrawRangeCircle()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        float deltaTheta = (2f * Mathf.PI) / lineRenderer.positionCount;
+        float theta = 0f;
+
+        for (int i = 0; i < lineRenderer.positionCount; i++)
+        {
+            float x = range * Mathf.Cos(theta);
+            float z = range * Mathf.Sin(theta);
+            Vector3 pos = new Vector3(x, 0, z);
+            lineRenderer.SetPosition(i, pos);
+            theta += deltaTheta;
+        }
     }
 
     Transform FindChildByName(Transform parent, string name)

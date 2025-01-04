@@ -17,13 +17,6 @@ public class AntSpawner : MonoBehaviour
         StartCoroutine(generateAnt());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Debug log to check the current spawn rate modifier
-        // Debug.Log("Current Spawn Rate Modifier: " + game.spawnRateModifier);
-    }
-
     private IEnumerator generateAnt()
     {
         while (true)
@@ -38,6 +31,15 @@ public class AntSpawner : MonoBehaviour
             AIPath aiPath = newAnt.GetComponent<AIPath>();
             aiPath.destination = targetPosition;
             aiPath.SearchPath();
+
+            // Set the health of the new ant based on the current round
+            Health antHealth = newAnt.GetComponent<Health>();
+            if (antHealth != null)
+            {
+                float additionalHealth = (game.round - 1) * 20f; // Increase health by 20 for each round
+                float initialHealth = 100f + additionalHealth; // Assuming base health is 100
+                antHealth.SetInitialHealth(initialHealth);
+            }
         }
     }
 }

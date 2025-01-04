@@ -11,12 +11,20 @@ This is a group project assignment from one of our courses, called Computer Grap
 
 ## How to Play
 
-1. **Place Towers**: Choose from a variety of towers to place on the map accordance with your economy situation 
+1. **Place Towers**: Choose from a variety of towers to place on the map according to the land given and economic situation. Towers can only be place on darker terrains. choose the towers from given options
 2. **Defend the Colony**: Stop enemies from reaching to the other side
 3. **Earn Rewards**: Each ant you kill earns you 5 coins.
 4. **Progress**: Challenge yourself by surviving as lost as possible.
 
+## Controls
+
+W/Up arrow: Move the camera towards north of the map
+S/down arrow : move the camera towards south of the map
+Left mouse button : Place tower on designated area/to pick tower from options given
+Right mouse button : Cancel a tower before it is set on the designated area
+
 ## Note
+
 - The unity version we use is the 2022.3.8f1 version. If you use some newer version of unity, you might see some prompt asking that the files are outdated. Simply ignore it and proceed as the game can be play in any version but we recommend using 2022.3.8f1.
 - When opening the folders and files in unity, you will see an error prompt talking about updates. Do not worry as that is just a minor error that doesn't contribute to the project as it is one of the dependecies we use to create the game A* project where one of the files is trying a newer version of the game and try to make a connection to the internet. However, unity has disclose stating this is a insecure connection not allowed. Nontheless, it doesnt bother with the project at all.
 
